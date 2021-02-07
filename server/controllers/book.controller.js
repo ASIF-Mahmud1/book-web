@@ -26,7 +26,7 @@ const bookByID = async (req, res, next, id) => {
       return res.status("400").json({
         error: "book not found",
       });
-    req.profile = user;
+    req.book = book;
     next();
   } catch (err) {
     return res.status("400").json({
@@ -36,10 +36,8 @@ const bookByID = async (req, res, next, id) => {
 };
 
 const read = (req, res) => {
-  req.profile.hashed_password = undefined;
-  req.profile.salt = undefined;
-  return res.json(req.profile);
-};
+  return res.json(req.book)
+}
 
 const list = async (req, res) => {
   try {
