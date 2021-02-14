@@ -36,8 +36,8 @@ const bookByID = async (req, res, next, id) => {
 };
 
 const read = (req, res) => {
-  return res.json(req.book)
-}
+  return res.json(req.book);
+};
 
 const list = async (req, res) => {
   try {
@@ -80,6 +80,14 @@ const remove = async (req, res) => {
   }
 };
 
+const test = async (req, res) => {
+  try {
+    res.status(200).json({ message: "ok" });
+  } catch (error) {
+    res.status(400).json({ error: errorHandler.getErrorMessage(err) });
+  }
+};
+
 export default {
   create,
   bookByID,
@@ -87,4 +95,5 @@ export default {
   list,
   remove,
   update,
+  test,
 };
