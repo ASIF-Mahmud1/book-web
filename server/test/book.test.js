@@ -8,7 +8,7 @@ const request = require("supertest"); // needed to make API requests
 describe("When the Book CRUD server is running", () => {
   // Add individual test cases
   it("should return 200 response if GET request to '/'", async () => {
-    const res = await request(app).get("/api/books");
+    const res = await request(app).get("/api/books/test");
     expect(res.status).toBe(200);
     expect(res.body.message).toBe("ok");
   });
