@@ -36,8 +36,8 @@ const bookByID = async (req, res, next, id) => {
 };
 
 const read = (req, res) => {
-  return res.json(req.book)
-}
+  return res.json(req.book);
+};
 
 const list = async (req, res) => {
   try {
@@ -52,13 +52,14 @@ const list = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    let user = req.profile;
-    user = extend(user, req.body);
-    user.updated = Date.now();
-    await user.save();
-    user.hashed_password = undefined;
-    user.salt = undefined;
-    res.json(user);
+    let book = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
+      useFindAndModify: false,
+    });
+    if (!book) {
+      res.status(404).json({ error: "Book not found" });
+    } else {
+      res.status(200).json({ message: "Book information updated", book: book });
+    }
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
@@ -68,11 +69,14 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    let user = req.profile;
-    let deletedUser = await user.remove();
-    deletedUser.hashed_password = undefined;
-    deletedUser.salt = undefined;
-    res.json(deletedUser);
+    let book = await Book.findByIdAndDelete(req.params.bookId);
+    if (!book) {
+      res.status(404).json({ error: "Book not found" });
+    } else {
+      res
+        .status(200)
+        .json({ message: "Book is deleted from the library", book: book });
+    }
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
