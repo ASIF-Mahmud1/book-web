@@ -9,18 +9,15 @@ const UserSchema = new mongoose.Schema({
   age: {
     type: String,
     trim: true,
-    required: "Age is required",
   },
   address: {
     type: String,
     trim: true,
-    required: "Address is required",
   },
   mobileNo: {
     type: String,
     unique: "Mobile Number already exists",
     trim: true,
-    required: "Mobile no. is required",
   },
   email: {
     type: String,
